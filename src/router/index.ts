@@ -10,13 +10,13 @@ const router = createRouter({
 })
 
 const modules = import.meta.glob('@/views/**/index.vue')
-let menu: {name: string}[] = []
+let menu: { name: string }[] = []
 // 循环添加路由
 for (const item in modules) {
   //正则匹配文件路径
   const path = item.match(/\/src\/views(\S*)\/index.vue/)?.[1]
-const name = path?.match(/[^/]+(?!.*\/)/)?.[0] ?? '默认值'
-  menu.push({name})
+  const name = path?.match(/[^/]+(?!.*\/)/)?.[0] ?? '默认值'
+  menu.push({ name })
   //then方法访问到的模块 添加入路由
   modules[item]().then((mod: any) => {
     const file = mod.default
@@ -26,6 +26,6 @@ const name = path?.match(/[^/]+(?!.*\/)/)?.[0] ?? '默认值'
       component: file,
     })
   })
-} 
+}
 console.log(router)
 export default router
